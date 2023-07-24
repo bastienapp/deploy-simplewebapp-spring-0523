@@ -12,6 +12,6 @@ ENV PORT 8080
 # Package stage
 #
 FROM openjdk:17-jdk-slim
-COPY --from=build /home/app/target/simplewebapp-0.0.1-SNAPSHOT.jar /usr/local/lib/webapp.jar
+COPY --from=build /home/app/target/*.jar /usr/local/lib/webapp.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/webapp.jar"]
