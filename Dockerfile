@@ -1,16 +1,14 @@
-#
-# Build stage
-#
-FROM maven:3.8.1-openjdk-17-slim AS build
+# Dockerfile Spring
+# build environment
+FROM openjdk:17-jdk-slim as build
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package
-
+COPY mvnw /home/app
+COPY .mvn /home/app/.mvn
+RUN /home/app/./mvnw -f /home/app/pom.xml clean package
 ENV PORT 8080
 
-#
-# Package stage
-#
+# production environment
 FROM openjdk:17-jdk-slim
 COPY --from=build /home/app/target/*.jar /usr/local/lib/webapp.jar
 EXPOSE 8080
